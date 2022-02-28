@@ -6,26 +6,26 @@ module.exports = class Company{
     //selects
 		static selectAll(){
 			return new Promise((resolve, reject) => {
-					db.query('SELECT * from company;',
+					db.query('SELECT * from email;',
 					(err, result) => {
 							return err ? reject(err) : resolve(result);
 					});
 			});
     };
-		static selectById(id_company){
+		static selectById(email){
 			return new Promise((resolve, reject) => {
-					db.query('SELECT * from company where id_company = ?;',
-					[id_company],
+					db.query('SELECT * from email where id_email = ?;',
+					[email.id_email],
 					(err, result) => {
 							return err ? reject(err) : resolve(result);
 					});
 			});
     };
 		//inserts
-		static insert(company){
+		static insert(email){
 			return new Promise((resolve, reject) => {
-					db.query('INSERT INTO company (name, cnpj, login, password, isActive) VALUES (?, ?, ?, ?, ?);',
-					[company.name, company.cnpj, company.login, company.password, company.isActive],
+					db.query('INSERT INTO email (id_company, email) VALUES (?, ?);',
+					[email.id_company, email.email],
 					(err, result) => {
 							return err ? reject(err) : resolve(result);
 					});

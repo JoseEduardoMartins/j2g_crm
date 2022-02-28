@@ -2,10 +2,14 @@
 //imports
 const express = require('express');
 const router = express.Router();
-//utils
+//controller
 const controller = require('../controllers/company-controller');
-const authService = require('../services/auth-service');
+//utils
+//const authService = require('../services/auth-service');
 //methods get
-router.get('/create', authService.authorize, controller.create);
+router.get('/getAll', controller.getAll);
+router.get('/getById', controller.getById);
+//methods get
+router.get('/create', controller.create);
 //export
 module.exports = router;
