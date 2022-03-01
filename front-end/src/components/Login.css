@@ -1,0 +1,63 @@
+.contaider{
+	border: 2px solid #696969;
+	border-radius: 10px;
+	width: 500px;
+	margin: 60px auto 0px;
+}
+.contaider_logo{
+	margin-top: 30px;
+}
+.contaider_form{
+	width: 300px;
+	height: 270px;
+	margin: auto;
+}
+fieldset{
+	border: solid 0px;
+	margin-top: 10px;
+}
+legend{
+	color: black;
+	text-align: center;
+	margin-bottom: 20px;
+	font-size:  20px;
+}
+input{
+	display: block;
+	margin: auto;
+	border-radius: 3px;
+	height: 25px;
+	text-align: center;
+	width: 270px;
+	border: 1px solid #BDBDBD;
+}
+input:focus{
+	box-shadow: 0 0 0 0;
+	border: 1px solid #6E6E6E;
+	outline: 0;
+}
+button{
+	padding: 10px 20px 10px;
+	background: var(--azul);
+	border-radius: 5px;
+	border: 0px;
+	color: white;
+	font-weight: bold;
+	margin-left: 130px;
+}
+.register{
+	color: var(--azul);
+	font-weight: bold;
+	text-decoration: none;
+	margin-left: 10px;
+}
+.forgot_password{
+	font-size: 13px;
+	color: var(--azul);
+	text-decoration: none;
+	font-weight: bold;
+	margin-left: 10px;
+}
+.enter{
+	cursor: pointer;
+}

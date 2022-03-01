@@ -1,0 +1,11 @@
+:root{
+	--azul: #0073cf;
+}
+* {
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+body {
+font-family: "Open Sans", sans-serif;
+}
