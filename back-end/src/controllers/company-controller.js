@@ -1,14 +1,20 @@
 'use strict';
+//imports
+const md5 = require('md5');
+const { cnpj } = require('cpf-cnpj-validator');
+//config
+const config = require('../config/config');
 //repository
 const repository = require('../repository/company');
-
+//utils
+const ValidationContract = require('../validators/validator');
+// const authService = require('../services/auth-service');
+// const emailService = require('../services/email-service');
 //methods get
 exports.getAll = async (req, res, next) => {
   try {
-		console.log('sdfsdfs');
-      const companies = await repository.selectAll(company);
-
-      res.status(200).send({ companies, message: 'Requisição realizada com sucesso!' });
+		const companies = await repository.selectAll();
+		res.status(200).send({ companies, message: 'Requisição realizada com sucesso!' });
   } catch (e) {
 		console.log(e);
       res.status(400).send({ e, message: 'Falha ao processar sua requisição' });
@@ -17,7 +23,7 @@ exports.getAll = async (req, res, next) => {
 exports.getById = async (req, res, next) => {
   try {
 			const { id_company } = req.body;
-      const company = await repository.selectAll( id_company );
+      const company = await repository.selectById( id_company );
 
       res.status(200).send({ company, message: 'Requisição realizada com sucesso!' });
   } catch (e) {
@@ -27,12 +33,55 @@ exports.getById = async (req, res, next) => {
 //methods post
 exports.create = async (req, res, next) => {
   try {
-      const company = req.body;
+      const { company } = req.body;
+			// data validation
+			const contract = new ValidationContract()
+			contract.isCnpj(company.cnpj, 'Cnpj invalido!')
+			contract.isEqualFields(company.password, company.confirmPassword, 'As senhas estão diferentes!')
+			contract.isPassword(company.password, 'A senha deve conter nominimo 8 caracteres, letras(maiusculas e minusculas) e numeros!')
 
-      await repository.insert(company);
+			// if invalid data
+			if(!contract.isValid()) return res.status(400).send({ message: contract.errors() }).end()
+			if(!cnpj.isValid(company.cnpj)) return res.status(400).send({ message: "Cnpj invalido!" }).end()
+
+      const id_company = await repository.insert({
+				name: company.name,
+				cnpj: company.cnpj.replaceAll(".","").replaceAll("/", "").replaceAll("-", ""),
+				login: company.login,
+				password: md5(company.password + global.SALT_KEY),
+				isActive: 1
+			});
+
+      res.status(200).send({ id_company, message: 'Requisição realizada com sucesso!' });
+  } catch (e) {
+      res.status(400).send({ e, message: 'Falha ao processar sua requisição' });
+  }
+};
+//methods put
+exports.update = async (req, res, next) => {
+  try {
+      const { company } = req.body;
+			// data validation
+			const contract = new ValidationContract()
+			contract.isCnpj(company.cnpj, 'Cnpj invalido!')
+			contract.isEqualFields(company.password, company.confirmPassword, 'As senhas estão diferentes!')
+			contract.isPassword(company.password, 'A senha deve conter nominimo 8 caracteres, letras(maiusculas e minusculas) e numeros!')
+
+			// if invalid data
+			if(!contract.isValid()) return res.status(400).send({ message: contract.errors() }).end()
+			if(!cnpj.isValid(company.cnpj)) return res.status(400).send({ message: "Cnpj invalido!" }).end()
+
+      await repository.update({
+				id_company: company.id_company,
+				name: company.name,
+				cnpj: company.cnpj.replaceAll(".","").replaceAll("/", "").replaceAll("-", ""),
+				login: company.login,
+				password: md5(company.password + global.SALT_KEY),
+				isActive: 1
+			});
 
       res.status(200).send({ message: 'Requisição realizada com sucesso!' });
   } catch (e) {
-      res.status(400).send({ message: 'Falha ao processar sua requisição' });
+      res.status(400).send({ e, message: 'Falha ao processar sua requisição' });
   }
 };

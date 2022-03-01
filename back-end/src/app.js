@@ -8,6 +8,8 @@ const app = express();
 
 //carrega as rotas
 const companyRoutes = require('./routes/company-route');
+const numberRoutes = require('./routes/number-route');
+const emailRoutes = require('./routes/email-route');
 
 app.use(bodyParser.json({
     limit: '5mb'
@@ -26,5 +28,7 @@ app.use((req, res, next) => {
 });
 
 app.use('/company', companyRoutes);
+app.use('/number', numberRoutes);
+app.use('/email', emailRoutes);
 
 module.exports = app;

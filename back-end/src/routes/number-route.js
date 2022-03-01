@@ -3,7 +3,7 @@
 const express = require('express');
 const router = express.Router();
 //controller
-const controller = require('../controllers/company-controller');
+const controller = require('../controllers/number-controller');
 //utils
 //const authService = require('../services/auth-service');
 //methods get
