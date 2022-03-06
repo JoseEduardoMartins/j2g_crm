@@ -10,6 +10,7 @@ const controller = require('../controllers/company-controller');
 router.get('/getAll', controller.getAll);
 router.get('/getById', controller.getById);
 //methods post
+router.post('/login', controller.authenticateUser);
 router.post('/create', controller.create);
 //methods put
 router.put('/update', controller.update);

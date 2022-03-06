@@ -21,6 +21,15 @@ module.exports = class Company{
 					});
 			});
     };
+		static selectByLogin(login){
+			return new Promise((resolve, reject) => {
+					db.query('SELECT * from company where login = ?;',
+					[login],
+					(err, result) => {
+							return err ? reject(err) : resolve(result[0]);
+					});
+			});
+    };
 		//inserts
 		static insert(company){
 			return new Promise((resolve, reject) => {

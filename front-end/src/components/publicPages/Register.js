@@ -13,14 +13,11 @@ const Register = () => {
 	function registerUser(e){
 		e.preventDefault()
 
-		console.log(company);
-
 		if(company.password !== company.confirmPassword) return alert("warning", "Senhas diferentes");
 
 		const headers = new Headers({
 			"Content-Type": "application/json",
 		});
-
 		const requestOptions = {
 			method: 'POST',
 			headers: headers,
@@ -29,9 +26,6 @@ const Register = () => {
 				company: company
 			})
 		};
-
-
-
 		fetch(`${getApiKey()}/company/create`, requestOptions)
 		.then( response => {
 			response.json()
@@ -51,6 +45,7 @@ const Register = () => {
 			})
 		})
 	}
+	
  	return(
 		<div className={Style.container}>
 			<form className={Style.contaider_form} onSubmit={(e) => registerUser(e)} >

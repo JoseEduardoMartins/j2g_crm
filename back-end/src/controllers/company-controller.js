@@ -8,8 +8,7 @@ const config = require('../config/config');
 const repository = require('../repository/company');
 //utils
 const ValidationContract = require('../validators/validator');
-// const authService = require('../services/auth-service');
-// const emailService = require('../services/email-service');
+const authService = require('../services/auth-service');
 //methods get
 exports.getAll = async (req, res, next) => {
   try {
@@ -58,6 +57,27 @@ exports.create = async (req, res, next) => {
   } catch (e) {
       res.status(400).send({ e, message: 'Falha ao processar sua requisição' });
   }
+};
+
+exports.authenticateUser = async (req, res, next) => {
+	try {
+			const {login, password} = req.body;
+
+			const company = await repository.selectByLogin(login);
+
+			if (!company) return res.status(400).send({code: 10, message: 'Usuário ou senha inválidos' });
+
+			if (company.password !== md5(password + global.SALT_KEY)) return res.status(400).send({code: 10, message: 'Usuário ou senha inválidos' });
+
+			const token = await authService.generateToken({
+					id_company: company.id_company,
+					login: company.login
+			});
+
+			res.status(200).send({code: 30, id_company: company.id_company, token: token, message: 'Autenticação realizada com sucesso!' });
+	} catch (e) {
+			res.status(400).send({ message: 'Falha ao processar sua requisição' });
+	}
 };
 //methods put
 exports.update = async (req, res, next) => {
