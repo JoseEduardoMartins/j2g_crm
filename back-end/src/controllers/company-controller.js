@@ -34,6 +34,8 @@ exports.getById = async (req, res, next) => {
 exports.create = async (req, res, next) => {
   try {
       const { company } = req.body;
+
+			console.log(company);
 			// data validation
 			const contract = new ValidationContract()
 			contract.isCnpj(company.cnpj, 'Cnpj invalido!')
@@ -41,7 +43,7 @@ exports.create = async (req, res, next) => {
 			contract.isPassword(company.password, 'A senha deve conter nominimo 8 caracteres, letras(maiusculas e minusculas) e numeros!')
 
 			// if invalid data
-			if(!contract.isValid()) return res.status(400).send({ message: contract.errors() }).end()
+			if(!contract.isValid()) return res.status(400).send({  message: contract.errors() }).end()
 			if(!cnpj.isValid(company.cnpj)) return res.status(400).send({ message: "Cnpj invalido!" }).end()
 
       const id_company = await repository.insert({

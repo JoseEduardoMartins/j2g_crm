@@ -14,6 +14,5 @@ const alert = (icon, title) => {
 	})
 }
 
-
 export { alert }
 
