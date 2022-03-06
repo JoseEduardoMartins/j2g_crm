@@ -1,11 +1,11 @@
-.contaider{
+.container{
 	border: 2px solid #696969;
 	border-radius: 10px;
 	width: 500px;
 	margin: 60px auto 0px;
 }
-.contaider_logo{
-	margin-top: 90px;
+.container_logo{
+	margin-top: 30px;
 }
 .contaider_form{
 	width: 300px;
