@@ -1,12 +1,14 @@
 import React, { useState } from "react";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 //css
 import Style from './Style.module.css';
 //utils
 import { getApiKey } from '../../utils/config';
+import { setToken } from '../../utils/auth';
 import { alert } from '../../utils/alerts';
 //component
 const Login = () => {
+	const navigate = useNavigate();
 	const [login, setLogin] = useState();
 	const [password, setPassword] = useState();
 
@@ -28,8 +30,22 @@ const Login = () => {
 		fetch(`${getApiKey()}/company/login`, requestOptions)
 		.then( response => {
 			response.json()
+			.then( data => {
+				if(data.code === 10){
+					alert("error", data.message)
+				} else{
+					setToken(data.token);
+					alert("success", data.message);
+					setTimeout(() => navigate(`/private/home`), 3000);
+				}
+				console.log(data);
+			})
 		})
 		.catch( response => {
+			response.json()
+			.then( data => {
+				alert("error", data.message)
+			})
 		})
 	}
 
@@ -38,7 +54,7 @@ const Login = () => {
         <form className={Style.contaider_form} onSubmit={authenticate}>
             <fieldset>
                 <legend>Fazer login</legend>
-                <input type="email" required placeholder="Login" onChange={(e) => setLogin(e.target.value)}/> <br/>
+                <input type="text" required placeholder="Login" onChange={(e) => setLogin(e.target.value)}/> <br/>
                 <input type="password" required placeholder="Senha" onChange={(e) => setPassword(e.target.value)}/> <br/>
                 <div className={Style.forgot_password}> Esqueceu sua senha? </div>
             </fieldset>
