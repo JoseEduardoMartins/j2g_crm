@@ -5,10 +5,11 @@ const router = express.Router();
 //controller
 const controller = require('../controllers/company-controller');
 //utils
-//const authService = require('../services/auth-service');
+const authService = require('../services/auth-service');
 //methods get
 router.get('/getAll', controller.getAll);
-router.get('/getById', controller.getById);
+router.get('/getById',authService.authorize, controller.getById);
+router.get('/getByToken', controller.getByToken);
 //methods post
 router.post('/login', controller.authenticateUser);
 router.post('/create', controller.create);

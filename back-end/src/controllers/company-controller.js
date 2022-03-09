@@ -29,6 +29,20 @@ exports.getById = async (req, res, next) => {
       res.status(400).send({ message: 'Falha ao processar sua requisição' });
   }
 };
+exports.getByToken = async (req, res, next) => {
+  try {
+		const token = req.body.token || req.query.token || req.headers['x-access-token'];
+		const data = await authService.decodeToken(token);
+
+		const user = await repository.getIdName(data.id);
+
+		if(!user) return res.status(400).send({ message: 'Cliente não encontrado' });
+
+    res.status(200).send({ company, message: 'Requisição realizada com sucesso!' });
+  } catch (e) {
+      res.status(400).send({ message: 'Falha ao processar sua requisição' });
+  }
+};
 //methods post
 exports.create = async (req, res, next) => {
   try {
@@ -70,8 +84,7 @@ exports.authenticateUser = async (req, res, next) => {
 			if (company.password !== md5(password + global.SALT_KEY)) return res.status(400).send({code: 10, message: 'Usuário ou senha inválidos' });
 
 			const token = await authService.generateToken({
-					id_company: company.id_company,
-					login: company.login
+					id_company: company.id_company
 			});
 
 			res.status(200).send({code: 30, id_company: company.id_company, token: token, message: 'Autenticação realizada com sucesso!' });
