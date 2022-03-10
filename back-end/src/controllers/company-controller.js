@@ -9,7 +9,9 @@ const repository = require('../repository/company');
 //utils
 const ValidationContract = require('../validators/validator');
 const authService = require('../services/auth-service');
-//methods get
+
+//METHODS GET
+//get all companies
 exports.getAll = async (req, res, next) => {
   try {
 		const companies = await repository.selectAll();
@@ -19,6 +21,7 @@ exports.getAll = async (req, res, next) => {
       res.status(400).send({ e, message: 'Falha ao processar sua requisição' });
   }
 };
+//get company by id
 exports.getById = async (req, res, next) => {
   try {
 			const { id_company } = req.body;
@@ -29,21 +32,25 @@ exports.getById = async (req, res, next) => {
       res.status(400).send({ message: 'Falha ao processar sua requisição' });
   }
 };
+//get company * by token validation
 exports.getByToken = async (req, res, next) => {
   try {
 		const token = req.body.token || req.query.token || req.headers['x-access-token'];
 		const data = await authService.decodeToken(token);
 
-		const user = await repository.getIdName(data.id);
+		const company = await repository.selectById(data.id_company);
 
-		if(!user) return res.status(400).send({ message: 'Cliente não encontrado' });
+		if(!company) return res.status(400).send({ message: 'Cliente não encontrado' });
 
-    res.status(200).send({ company, message: 'Requisição realizada com sucesso!' });
+    res.status(200).send({
+			company,
+			message: 'Requisição realizada com sucesso!'
+		});
   } catch (e) {
       res.status(400).send({ message: 'Falha ao processar sua requisição' });
   }
 };
-//methods post
+//METHODS POST
 exports.create = async (req, res, next) => {
   try {
       const { company } = req.body;
@@ -72,7 +79,7 @@ exports.create = async (req, res, next) => {
       res.status(400).send({ e, message: 'Falha ao processar sua requisição' });
   }
 };
-
+//Authorize company if datas is corrects
 exports.authenticateUser = async (req, res, next) => {
 	try {
 			const {login, password} = req.body;
@@ -92,7 +99,8 @@ exports.authenticateUser = async (req, res, next) => {
 			res.status(400).send({ message: 'Falha ao processar sua requisição' });
 	}
 };
-//methods put
+//METHODS PUT
+//Update * company
 exports.update = async (req, res, next) => {
   try {
       const { company } = req.body;

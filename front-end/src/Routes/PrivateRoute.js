@@ -4,11 +4,13 @@ import { Outlet, useNavigate, Navigate } from 'react-router-dom';
 //Utils
 import { isLogged, getToken, removeToken } from '../utils/auth';
 import { getApiKey } from '../utils/config';
+import { alert } from '../utils/alerts';
+
 //Component
 const PrivateRoute = () => {
 	const navigate = useNavigate();
 
-	const [user, setUser] = useState();
+	const [company, setCompany] = useState();
 
 	useEffect(() => {
 		const requestOptions = {
@@ -18,13 +20,25 @@ const PrivateRoute = () => {
 				'x-access-token': getToken()
 			}
 		}
-		fetch(`${getApiKey()}/company/getById`, requestOptions)
+		fetch(`${getApiKey()}/company/getByToken`, requestOptions)
 		.then( response => {
-			response.json().then( data =>
-				setUser(data)
+			console.log(response);
+			response.json()
+			.then( data =>
+				setCompany(data.company)
 			)
 		})
+		.catch(response => {
+			response.json()
+			.then( data =>{
+				alert("error", data.message);
+				setTimeout(() => navigate(`/`), 3000);
+			})
+		})
+		// eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+	console.log(company);
 
 	function logout(){
 		removeToken()

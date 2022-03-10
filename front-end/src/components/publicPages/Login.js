@@ -38,7 +38,6 @@ const Login = () => {
 					alert("success", data.message);
 					setTimeout(() => navigate(`/private/home`), 3000);
 				}
-				console.log(data);
 			})
 		})
 		.catch( response => {

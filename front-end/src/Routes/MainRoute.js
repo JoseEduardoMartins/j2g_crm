@@ -2,8 +2,8 @@
 import React from "react";
 import { BrowserRouter, Routes , Route } from 'react-router-dom';
 //routes
-import PublicRoute from '../Routes/PublicRoute';
-import PrivateRoute from '../Routes/PrivateRoute';
+import PublicRoute from '../routes/PublicRoute';
+import PrivateRoute from '../routes/PrivateRoute';
 //components
 import Home from '../components/privatePages/Home';
 import Login from '../components/publicPages/Login';
