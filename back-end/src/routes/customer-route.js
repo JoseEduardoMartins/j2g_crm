@@ -3,11 +3,11 @@
 const express = require('express');
 const router = express.Router();
 //controller
-const controller = require('../controllers/company-controller');
+const controller = require('../controllers/customer-controller');
 //utils
 const authService = require('../services/auth-service');
 //methods get
-router.get('/getAll', authService.authorize, controller.getAll);
+router.get('/getAll', controller.getAll);
 router.get('/getById', authService.authorize, controller.getById);
 router.get('/getByToken', authService.authorize, controller.getByToken);
 //methods post

@@ -14,7 +14,6 @@ const Login = () => {
 
 	function authenticate(e){
 		e.preventDefault()
-
 		const headers = new Headers({
 			"Content-Type": "application/json",
 		});

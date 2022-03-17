@@ -2,20 +2,20 @@
 //connection
 const db = require('../connections/j2g-connection');
 //class
-module.exports = class Company{
+module.exports = class Customer{
     //selects
 		static selectAll(){
 			return new Promise((resolve, reject) => {
-					db.query('SELECT * from company;',
+					db.query('SELECT * from customer;',
 					(err, result) => {
 							return err ? reject(err) : resolve(result);
 					});
 			});
     };
-		static selectById(id_company){
+		static selectById(customer_id){
 			return new Promise((resolve, reject) => {
-					db.query('SELECT * from company where id_company = ?;',
-					[id_company],
+					db.query('SELECT * from customer where customer_id = ?;',
+					[customer_id],
 					(err, result) => {
 							return err ? reject(err) : resolve(result[0]);
 					});
@@ -23,7 +23,7 @@ module.exports = class Company{
     };
 		static selectByLogin(login){
 			return new Promise((resolve, reject) => {
-					db.query('SELECT * from company where login = ?;',
+					db.query('SELECT * from customer where login = ?;',
 					[login],
 					(err, result) => {
 							return err ? reject(err) : resolve(result[0]);
@@ -31,20 +31,20 @@ module.exports = class Company{
 			});
     };
 		//inserts
-		static insert(company){
+		static insert(customer){
 			return new Promise((resolve, reject) => {
-					db.query('INSERT INTO company (name, cnpj, login, password, isActive) VALUES (?, ?, ?, ?, ?);',
-					[company.name, company.cnpj, company.login, company.password, company.isActive],
+					db.query('INSERT INTO customer (name, cnpj, login, password, isActive) VALUES (?, ?, ?, ?, ?);',
+					[customer.name, customer.cnpj, customer.login, customer.password, customer.isActive],
 					(err, result) => {
 							return err ? reject(err) : resolve(result.insertId);
 					});
 			});
     };
 		//updates
-		static update(company){
+		static update(customer){
 			return new Promise((resolve, reject) => {
-					db.query('UPDATE company SET name = ?, cnpj = ?, login = ?, password = ?, isActive = ? WHERE id_company = ?;',
-					[company.name, company.cnpj, company.login, company.password, company.isActive, company.id_company],
+					db.query('UPDATE customer SET name = ?, cnpj = ?, login = ?, password = ?, isActive = ? WHERE id_customer = ?;',
+					[customer.name, customer.cnpj, customer.login, customer.password, customer.isActive, customer.id_customer],
 					(err, result) => {
 							return err ? reject(err) : resolve(result);
 					});

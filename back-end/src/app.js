@@ -7,7 +7,7 @@ const bodyParser = require('body-parser');
 const app = express();
 
 //carrega as rotas
-const companyRoutes = require('./routes/company-route');
+const customerRoutes = require('./routes/customer-route');
 const numberRoutes = require('./routes/number-route');
 const emailRoutes = require('./routes/email-route');
 
@@ -27,7 +27,7 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use('/company', companyRoutes);
+app.use('/customer', customerRoutes);
 app.use('/number', numberRoutes);
 app.use('/email', emailRoutes);
 
