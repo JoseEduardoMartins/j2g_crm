@@ -3,14 +3,14 @@
 const express = require('express');
 const router = express.Router();
 //controller
-const controller = require('../controllers/number-controller');
+const controller = require('../controllers/customerPhone-controller');
 //utils
 //const authService = require('../services/auth-service');
 //methods get
-router.get('/getAll', controller.getAll);
+router.get('/get', controller.get);
 router.get('/getById', controller.getById);
 //methods post
-router.post('/create', controller.create);
+router.post('/set', controller.set);
 //methods put
 router.put('/update', controller.update);
 //export

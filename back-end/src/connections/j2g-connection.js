@@ -4,10 +4,10 @@ const mysql = require('mysql');
 
 const db_j2g = mysql.createPool({
    connectionLimit : 100, //important
-   host     : "localhost",
-   user     : "root",
-   password : "root",
-   database : "db_j2g",
+   host     : "207.244.254.56",
+   user     : "eutequero_userdb",
+   password : ",R_rK7&K$GPW",
+   database : "eutequero_db",
    debug    :  false
 });
 

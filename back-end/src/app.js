@@ -8,12 +8,13 @@ const app = express();
 
 //carrega as rotas
 const customerRoutes = require('./routes/customer-route');
-const numberRoutes = require('./routes/number-route');
+const customerPhoneRoutes = require('./routes/customerPhone-route');
 const emailRoutes = require('./routes/email-route');
 
 app.use(bodyParser.json({
     limit: '5mb'
 }));
+
 app.use(bodyParser.urlencoded({
     extended: false
 }));
@@ -28,7 +29,7 @@ app.use((req, res, next) => {
 });
 
 app.use('/customer', customerRoutes);
-app.use('/number', numberRoutes);
+app.use('/customer_phone', customerPhoneRoutes);
 app.use('/email', emailRoutes);
 
 module.exports = app;
